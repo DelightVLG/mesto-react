@@ -22,6 +22,12 @@ function App() {
     setIsAddPlaceModalOpen(true);
   };
 
+  const closeAllPopups = () => {
+    setIsEditAvatarModalOpen(false);
+    setIsEditProfileModalOpen(false);
+    setIsAddPlaceModalOpen(false);
+  }
+
   return (
     <>
       <div className="page">
@@ -46,7 +52,7 @@ function App() {
               <input type="submit" className="modal__sbmt-btn" value="Сохранить" name="save" disabled />
             </>
             }
-           isOpen={isEditAvatarModalOpen}/>
+           isOpen={isEditAvatarModalOpen} onClose={closeAllPopups}/>
 
           <ModalWithForm
           name={'edit-profile'}
@@ -62,7 +68,7 @@ function App() {
             <input type="submit" className="modal__sbmt-btn" value="Сохранить" name="save" disabled />
             </>
           }
-          isOpen={isEditProfileModalOpen}
+          isOpen={isEditProfileModalOpen} onClose={closeAllPopups}
           />
 
           <ModalWithForm
@@ -80,7 +86,7 @@ function App() {
               <input type="submit" className="modal__sbmt-btn" value="Создать" name="save" />
               </>
             }
-            isOpen={isAddPlaceModalOpen}
+            isOpen={isAddPlaceModalOpen} onClose={closeAllPopups}
             />
         </div>
       </div>
