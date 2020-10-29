@@ -1,8 +1,9 @@
 import React from 'react';
 
-const Footer = () => (
+// eslint-disable-next-line react/prop-types
+const Footer = ({ copyright }) => (
   <footer className="footer">
-    <p className="footer__copyright">© 2020 Mesto Russia. Сергей Компаниец</p>
+    <p className="footer__copyright">{copyright}</p>
   </footer>
 );
 
