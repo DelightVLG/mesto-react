@@ -17,8 +17,6 @@ const Main = () => {
     <main className="page__main">
       <section className="profile page__profile">
         <div className="profile__info">
-          {/* eslint-disable-next-line max-len */}
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
           <div onClick={handleEditAvatarClick} className="profile__photo-container">
             <img className="profile__photo" src="#" alt="Фотография профиля" />
           </div>
