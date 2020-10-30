@@ -6,11 +6,10 @@ import Spinner from './Spinner';
 const Main = ({
   onEditAvatar, onEditProfile, onAddPlace, onCardClick,
 }) => {
-  console.log('MAIN RENDERED');
 
   const [userName, setUserName] = useState('');
   const [userDescription, setUserDescription] = useState('');
-  const [userAvatar, setUserAvatar] = useState();
+  const [userAvatar, setUserAvatar] = useState('');
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -20,22 +19,32 @@ const Main = ({
         setUserName(data.name);
         setUserDescription(data.about);
         setUserAvatar(data.avatar);
-      }));
+      }))
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
 
   useEffect(() => {
     setIsLoading(true);
 
-    api.getInitialCardList()
-      .then((data) => {
-        const items = data.map((item) => ({
+    Promise.all([
+      api.getInitialCardList()
+    ])
+        .then((result) => {
+        const cardsData = result[0];
+        const items = cardsData.map((item) => ({
           id: item._id,
           name: item.name,
           link: item.link,
           likes: item.likes.length,
         }));
+
         setIsLoading(false);
         setCards(items);
+      })
+      .catch((err) => {
+        console.error(err);
       });
   }, []);
 

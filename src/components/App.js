@@ -9,7 +9,7 @@ function App() {
   const [isEditAvatarModalOpen, setIsEditAvatarModalOpen] = useState(false);
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
   const [isAddPlaceModalOpen, setIsAddPlaceModalOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({isImgOpen: false});
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarModalOpen(true);
@@ -24,14 +24,14 @@ function App() {
   };
 
   const handleCardClick = (card) => {
-    setSelectedCard(card);
+    setSelectedCard({isImgOpen: true, ...card});
   };
 
   const closeAllPopups = () => {
     setIsEditAvatarModalOpen(false);
     setIsEditProfileModalOpen(false);
     setIsAddPlaceModalOpen(false);
-    setSelectedCard(false);
+    setSelectedCard({ isImgOpen: false});
   };
 
   return (
