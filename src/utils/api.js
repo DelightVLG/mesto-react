@@ -88,6 +88,6 @@ const api = new Api({
     authorization: 'c2262ae2-cc7e-47ac-904f-82f5dcb37778',
     'Content-Type': 'application/json',
   },
-})
+});
 
 export default api;

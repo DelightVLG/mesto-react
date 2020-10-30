@@ -3,7 +3,9 @@ import api from '../utils/api';
 import Card from './Card';
 import Spinner from './Spinner';
 
-const Main = ({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) => {
+const Main = ({
+  onEditAvatar, onEditProfile, onAddPlace, onCardClick,
+}) => {
   console.log('MAIN RENDERED');
 
   const [userName, setUserName] = useState('');
@@ -14,11 +16,11 @@ const Main = ({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) => {
 
   useEffect(() => {
     api.getUserInfo()
-      .then((data => {
+      .then(((data) => {
         setUserName(data.name);
         setUserDescription(data.about);
         setUserAvatar(data.avatar);
-      }))
+      }));
   }, []);
 
   useEffect(() => {
@@ -26,16 +28,16 @@ const Main = ({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) => {
 
     api.getInitialCardList()
       .then((data) => {
-        const items = data.map(item => ({
+        const items = data.map((item) => ({
           id: item._id,
           name: item.name,
           link: item.link,
-          likes: item.likes.length
-          }));
-        setIsLoading(false)
+          likes: item.likes.length,
+        }));
+        setIsLoading(false);
         setCards(items);
       });
-  },[])
+  }, []);
 
   return (
     <main className="page__main">
@@ -55,7 +57,9 @@ const Main = ({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) => {
 
       <section className="page__elements">
         <ul className="elements">
-          {isLoading ? <Spinner /> : cards.map(card => <Card key={card.id} card={card}  onCardClick={onCardClick}/> )}
+          {isLoading
+            ? <Spinner />
+            : cards.map((card) => <Card key={card.id} card={card} onCardClick={onCardClick} />)}
         </ul>
       </section>
 
