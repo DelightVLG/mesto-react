@@ -3,7 +3,7 @@ import api from '../utils/api';
 import Card from './Card';
 import Spinner from './Spinner';
 
-const Main = ({ onEditAvatar, onEditProfile, onAddPlace }) => {
+const Main = ({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) => {
   console.log('MAIN RENDERED');
 
   const [userName, setUserName] = useState('');
@@ -55,17 +55,9 @@ const Main = ({ onEditAvatar, onEditProfile, onAddPlace }) => {
 
       <section className="page__elements">
         <ul className="elements">
-          {isLoading ? <Spinner /> : cards.map(card => <Card key={card.id} {...card}/> )}
+          {isLoading ? <Spinner /> : cards.map(card => <Card key={card.id} card={card}  onCardClick={onCardClick}/> )}
         </ul>
       </section>
-
-      {/*<div className="modal modal_type_preview">*/}
-      {/*  <div className="modal__preview-container">*/}
-      {/*    <span className="modal__close-btn modal__close-btn_type_preview" />*/}
-      {/*    <img className="modal__preview-img" src="#" alt="" />*/}
-      {/*    <p className="modal__preview-subtitle" />*/}
-      {/*  </div>*/}
-      {/*</div>*/}
 
     </main>
   );
