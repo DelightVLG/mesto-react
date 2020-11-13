@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import ModalWithForm from './ModalWithForm';
 import ImageModal from './ImageModal';
+import api from '../utils/api';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
   const [isEditAvatarModalOpen, setIsEditAvatarModalOpen] = useState(false);
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
   const [isAddPlaceModalOpen, setIsAddPlaceModalOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({isImgOpen: false});
+  const [currentUser, setCurrentUser] = useState({});
+
+  useEffect(() => {
+    api.getUserInfo()
+      .then((data) => {
+        setCurrentUser(data);
+        console.log('userData:', data)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  },[]);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarModalOpen(true);
@@ -35,7 +49,7 @@ function App() {
   };
 
   return (
-    <>
+    <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <div className="page__container">
           <Header />
@@ -135,7 +149,7 @@ function App() {
 
         <ImageModal card={selectedCard} onClose={closeAllPopups} />
       </div>
-    </>
+    </CurrentUserContext.Provider>
   );
 }
 
