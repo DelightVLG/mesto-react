@@ -52,6 +52,12 @@ class Api {
       .then(this._getResponse);
   }
 
+  changeLikeCardStatus(cardId, isLiked) {
+    return isLiked
+      ? this.dislikeCard(cardId)
+      : this.likeCard(cardId)
+  }
+
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
       method: 'GET',
