@@ -26,7 +26,7 @@ const Main = ({
           name: item.name,
           link: item.link,
           likes: item.likes,
-          owner: item.owner._id,
+          owner: item.owner,
         }));
 
         setIsLoading(false);
@@ -46,7 +46,19 @@ const Main = ({
       .then((newCard) => {
       const newCards = cards.map((item) => item._id === card._id ? newCard : item);
       setCards(newCards);
-    });
+    })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  function handleCardDelete(card) {
+    console.log(card);
+    api.deleteCard(card._id)
+      .then(() => {
+        const newCards = cards.filter((item) => item._id !== card._id);
+        setCards(newCards);
+      })
   }
 
   return (
@@ -72,7 +84,8 @@ const Main = ({
             : cards.map((card) => <Card key={card._id}
                                         card={card}
                                         onCardClick={onCardClick}
-                                        onCardLike={handleCardLike} />)}
+                                        onCardLike={handleCardLike}
+                                        onCardDelete = {handleCardDelete} />)}
         </ul>
       </section>
 

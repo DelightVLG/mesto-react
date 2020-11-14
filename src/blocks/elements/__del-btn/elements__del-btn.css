@@ -18,3 +18,7 @@
 .elements__del-btn:hover {
   opacity: .6;
 }
+
+.elements__del-btn:focus {
+  outline: none;
+}

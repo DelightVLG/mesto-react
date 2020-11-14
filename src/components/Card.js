@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-const Card = ({ card, onCardClick, onCardLike }) => {
+const Card = ({ card, onCardClick, onCardLike, onCardDelete }) => {
 
   const currentUser = useContext(CurrentUserContext);
 
-  const isOwn = card.owner === currentUser._id;
+  const isOwn = card.owner._id === currentUser._id;
   const cardDeleteButtonClassName = (`elements__del-btn ${!isOwn
     ? 'elements__del-btn_is-hidden'
     : ''}`);
@@ -23,6 +23,10 @@ const Card = ({ card, onCardClick, onCardLike }) => {
     onCardLike(card);
   }
 
+  function handleDeleteClick() {
+    onCardDelete(card);
+  }
+
   return (
     <>
       <li className="elements__element" key={card._id}>
@@ -33,7 +37,7 @@ const Card = ({ card, onCardClick, onCardLike }) => {
             <button className={cardLikeButtonClassName} onClick={handleLike} />
             <p className="elements__like-counter">{card.likes.length}</p>
           </div>
-          <button className={cardDeleteButtonClassName} />
+          <button className={cardDeleteButtonClassName} onClick={handleDeleteClick}/>
         </div>
       </li>
     </>
