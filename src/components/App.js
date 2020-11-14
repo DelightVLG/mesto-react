@@ -4,10 +4,12 @@ import Main from './Main';
 import Footer from './Footer';
 import ModalWithForm from './ModalWithForm';
 import ImageModal from './ImageModal';
+import EditProfileModal from './EditProfileModal';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
+
   const [isEditAvatarModalOpen, setIsEditAvatarModalOpen] = useState(false);
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
   const [isAddPlaceModalOpen, setIsAddPlaceModalOpen] = useState(false);
@@ -32,6 +34,17 @@ function App() {
     setIsEditProfileModalOpen(true);
   };
 
+  const handleUpdateUser = (userData) => {
+    api.saveUserInfo(userData)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllModals();
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+  }
+
   const handleAddPlaceClick = () => {
     setIsAddPlaceModalOpen(true);
   };
@@ -40,7 +53,7 @@ function App() {
     setSelectedCard({isImgOpen: true, ...card});
   };
 
-  const closeAllPopups = () => {
+  const closeAllModals = () => {
     setIsEditAvatarModalOpen(false);
     setIsEditProfileModalOpen(false);
     setIsAddPlaceModalOpen(false);
@@ -78,42 +91,12 @@ function App() {
               </>
             )}
             isOpen={isEditAvatarModalOpen}
-            onClose={closeAllPopups}
+            onClose={closeAllModals}
           />
 
-          <ModalWithForm
-            name="edit-profile"
-            title="Редактировать профиль"
-            children={(
-              <>
-                <input
-                  type="text"
-                  className="modal__input-txt modal__input-txt_type_name"
-                  name="name"
-                  placeholder="Имя"
-                  required
-                  minLength="2"
-                  maxLength="40"
-                  autoComplete="off"
-                />
-                <span className="modal__input-error" id="name-error" />
-                <input
-                  type="text"
-                  className="modal__input-txt modal__input-txt_type_job"
-                  name="about"
-                  placeholder="Ваша профессия?"
-                  required
-                  minLength="2"
-                  maxLength="200"
-                  autoComplete="off"
-                />
-                <span className="modal__input-error" id="about-error" />
-                <input type="submit" className="modal__sbmt-btn" value="Сохранить" name="save" disabled />
-              </>
-          )}
-            isOpen={isEditProfileModalOpen}
-            onClose={closeAllPopups}
-          />
+          <EditProfileModal isOpen={isEditProfileModalOpen}
+                            onClose={closeAllModals}
+                            onUpdateUser={handleUpdateUser} />
 
           <ModalWithForm
             name="add-place"
@@ -142,11 +125,11 @@ function App() {
               </>
             )}
             isOpen={isAddPlaceModalOpen}
-            onClose={closeAllPopups}
+            onClose={closeAllModals}
           />
         </div>
 
-        <ImageModal card={selectedCard} onClose={closeAllPopups} />
+        <ImageModal card={selectedCard} onClose={closeAllModals} />
       </div>
     </CurrentUserContext.Provider>
   );
