@@ -34,6 +34,8 @@ function EditProfileModal({ isOpen, onClose, onUpdateUser }) {
     <ModalWithForm
       name="edit-profile"
       title="Редактировать профиль"
+      isOpen={isOpen}
+      onClose={onClose}
       onSubmit={handleSubmit}
       children={(
         <>
@@ -66,8 +68,6 @@ function EditProfileModal({ isOpen, onClose, onUpdateUser }) {
           <input type="submit" className="modal__sbmt-btn" value="Сохранить" name="save" />
         </>
       )}
-      isOpen={isOpen}
-      onClose={onClose}
     />
 
   );

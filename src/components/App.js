@@ -7,6 +7,7 @@ import ImageModal from './ImageModal';
 import EditProfileModal from './EditProfileModal';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import EditAvatarModal from "./EditAvatarModal";
 
 function App() {
 
@@ -28,6 +29,18 @@ function App() {
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarModalOpen(true);
+  };
+
+  const handleUpdateAvatar = (avatarData) => {
+    console.log('avatarData', avatarData)
+    api.changeAvatar(avatarData)
+      .then((res) => {
+      setCurrentUser(res);
+      closeAllModals();
+    })
+      .catch((err) => {
+        console.error(err);
+      })
   };
 
   const handleEditProfileClick = () => {
@@ -75,24 +88,9 @@ function App() {
 
           <Footer copyright="© 2020 Mesto Russia. Сергей Компаниец" />
 
-          <ModalWithForm
-            name="edit-avatar"
-            title="Обновить аватар?"
-            children={(
-              <>
-                <input
-                  type="url"
-                  className="modal__input-txt modal__input-txt_type_edit-avatar"
-                  name="link"
-                  placeholder="Ссылка на новое фото"
-                />
-                <span className="modal__input-error" id="link-error" />
-                <input type="submit" className="modal__sbmt-btn" value="Сохранить" name="save" disabled />
-              </>
-            )}
-            isOpen={isEditAvatarModalOpen}
-            onClose={closeAllModals}
-          />
+          <EditAvatarModal isOpen={isEditAvatarModalOpen}
+                           onClose={closeAllModals}
+                           onUpdateAvatar={handleUpdateAvatar} />
 
           <EditProfileModal isOpen={isEditProfileModalOpen}
                             onClose={closeAllModals}
