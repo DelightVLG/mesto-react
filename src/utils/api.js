@@ -22,8 +22,8 @@ class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        name: cardData.placeName,
-        link: cardData.placeUrl,
+        name: cardData.cardTitle,
+        link: cardData.cardSrc,
       }),
     })
       .then(this._getResponse);
