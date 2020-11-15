@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ModalWithForm from './ModalWithForm';
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function EditProfileModal({ isOpen, onClose, onUpdateUser }) {
-
   const currentUser = React.useContext(CurrentUserContext);
 
   const [name, setName] = useState('');
@@ -16,19 +15,19 @@ function EditProfileModal({ isOpen, onClose, onUpdateUser }) {
 
   const handleChangeName = (evt) => {
     setName(evt.target.value);
-  }
+  };
 
   const handleChangeDescription = (evt) => {
     setDescription(evt.target.value);
-  }
+  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
     onUpdateUser({
-      name: name,
+      name,
       about: description,
-    })
-  }
+    });
+  };
 
   return (
     <ModalWithForm

@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-const Card = ({ card, onCardClick, onCardLike, onCardDelete }) => {
-
+const Card = ({
+  card, onCardClick, onCardLike, onCardDelete,
+}) => {
   const currentUser = useContext(CurrentUserContext);
 
   const isOwn = card.owner._id === currentUser._id;
@@ -10,10 +11,10 @@ const Card = ({ card, onCardClick, onCardLike, onCardDelete }) => {
     ? 'elements__del-btn_is-hidden'
     : ''}`);
 
-  const isLiked = card.likes.some(like => like._id === currentUser._id);
+  const isLiked = card.likes.some((like) => like._id === currentUser._id);
   const cardLikeButtonClassName = (`elements__like-btn ${isLiked
-  ? 'elements__like-btn_is-active'
-  : ''}`);
+    ? 'elements__like-btn_is-active'
+    : ''}`);
 
   function handleClick() {
     onCardClick(card);
@@ -37,7 +38,7 @@ const Card = ({ card, onCardClick, onCardLike, onCardDelete }) => {
             <button className={cardLikeButtonClassName} onClick={handleLike} />
             <p className="elements__like-counter">{card.likes.length}</p>
           </div>
-          <button className={cardDeleteButtonClassName} onClick={handleDeleteClick}/>
+          <button className={cardDeleteButtonClassName} onClick={handleDeleteClick} />
         </div>
       </li>
     </>

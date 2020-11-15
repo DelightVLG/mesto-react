@@ -6,15 +6,14 @@ import ImageModal from './ImageModal';
 import EditProfileModal from './EditProfileModal';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import EditAvatarModal from "./EditAvatarModal";
-import AddPlaceModal from "./AddPlaceModal";
+import EditAvatarModal from './EditAvatarModal';
+import AddPlaceModal from './AddPlaceModal';
 
 function App() {
-
   const [isEditAvatarModalOpen, setIsEditAvatarModalOpen] = useState(false);
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
   const [isAddPlaceModalOpen, setIsAddPlaceModalOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState({isImgOpen: false});
+  const [selectedCard, setSelectedCard] = useState({ isImgOpen: false });
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +23,7 @@ function App() {
 
     Promise.all([
       api.getInitialCardList(),
-      api.getUserInfo()
+      api.getUserInfo(),
     ])
       .then((result) => {
         const cardsData = result[0];
@@ -52,15 +51,14 @@ function App() {
   };
 
   const handleUpdateAvatar = (avatarData) => {
-    console.log('avatarData', avatarData)
     api.changeAvatar(avatarData)
       .then((res) => {
-      setCurrentUser(res);
-      closeAllModals();
-    })
+        setCurrentUser(res);
+        closeAllModals();
+      })
       .catch((err) => {
         console.error(err);
-      })
+      });
   };
 
   const handleEditProfileClick = () => {
@@ -75,8 +73,8 @@ function App() {
       })
       .catch((err) => {
         console.error(err);
-      })
-  }
+      });
+  };
 
   const handleAddPlaceClick = () => {
     setIsAddPlaceModalOpen(true);
@@ -90,12 +88,12 @@ function App() {
         closeAllModals();
       })
       .catch((err) => {
-        console.error(err)
+        console.error(err);
       });
-  }
+  };
 
   const handleCardClick = (card) => {
-    setSelectedCard({isImgOpen: true, ...card});
+    setSelectedCard({ isImgOpen: true, ...card });
   };
 
   function handleCardDelete(card) {
@@ -104,16 +102,15 @@ function App() {
       .then(() => {
         const newCards = cards.filter((item) => item._id !== card._id);
         setCards(newCards);
-      })
+      });
   }
 
   function handleCardLike(card) {
-
-    const isLiked = card.likes.some(like => like._id === currentUser._id);
+    const isLiked = card.likes.some((like) => like._id === currentUser._id);
 
     api.changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
-        const newCards = cards.map((item) => item._id === card._id ? newCard : item);
+        const newCards = cards.map((item) => (item._id === card._id ? newCard : item));
         setCards(newCards);
       })
       .catch((err) => {
@@ -125,7 +122,7 @@ function App() {
     setIsEditAvatarModalOpen(false);
     setIsEditProfileModalOpen(false);
     setIsAddPlaceModalOpen(false);
-    setSelectedCard({ isImgOpen: false});
+    setSelectedCard({ isImgOpen: false });
   };
 
   return (
@@ -147,17 +144,23 @@ function App() {
 
           <Footer copyright="© 2020 Mesto Russia. Сергей Компаниец" />
 
-          <EditAvatarModal isOpen={isEditAvatarModalOpen}
-                           onClose={closeAllModals}
-                           onUpdateAvatar={handleUpdateAvatar} />
+          <EditAvatarModal
+            isOpen={isEditAvatarModalOpen}
+            onClose={closeAllModals}
+            onUpdateAvatar={handleUpdateAvatar}
+          />
 
-          <EditProfileModal isOpen={isEditProfileModalOpen}
-                            onClose={closeAllModals}
-                            onUpdateUser={handleUpdateUser} />
+          <EditProfileModal
+            isOpen={isEditProfileModalOpen}
+            onClose={closeAllModals}
+            onUpdateUser={handleUpdateUser}
+          />
 
-          <AddPlaceModal isOpen={isAddPlaceModalOpen}
-                         onClose={closeAllModals}
-                         onAddPlace={handleAddPlaceSubmit} />
+          <AddPlaceModal
+            isOpen={isAddPlaceModalOpen}
+            onClose={closeAllModals}
+            onAddPlace={handleAddPlaceSubmit}
+          />
         </div>
 
         <ImageModal card={selectedCard} onClose={closeAllModals} />

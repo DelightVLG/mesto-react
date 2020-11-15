@@ -1,18 +1,16 @@
 import React from 'react';
-import ModalWithForm from "./ModalWithForm";
+import ModalWithForm from './ModalWithForm';
 
 function EditAvatarModal({ isOpen, onClose, onUpdateAvatar }) {
-
-  const changeAvatar = React.useRef("");
+  const changeAvatar = React.useRef('');
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
     onUpdateAvatar({
       avatar: changeAvatar.current.value,
-    })
+    });
   };
-
 
   return (
     <ModalWithForm

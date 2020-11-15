@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
-import ModalWithForm from "./ModalWithForm";
+import ModalWithForm from './ModalWithForm';
 
 function AddPlaceModal({ isOpen, onClose, onAddPlace }) {
+  const [cardTitle, setCardTitle] = useState('');
+  const [cardSrc, setCardSrc] = useState('');
 
-const [cardTitle, setCardTitle] = useState('');
-const [cardSrc, setCardSrc] = useState('');
+  const handleAddTitle = (evt) => {
+    setCardTitle(evt.target.value);
+  };
 
-const handleAddTitle = (evt) => {
-  setCardTitle(evt.target.value);
-}
+  const handleAddSrc = (evt) => {
+    setCardSrc(evt.target.value);
+  };
 
-const handleAddSrc = (evt) => {
-  setCardSrc(evt.target.value)
-}
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
 
-const handleSubmit = (evt) => {
-  evt.preventDefault();
-
-  onAddPlace({ cardTitle, cardSrc });
-}
+    onAddPlace({ cardTitle, cardSrc });
+  };
 
   return (
     <ModalWithForm
@@ -40,7 +39,7 @@ const handleSubmit = (evt) => {
             minLength="1"
             maxLength="30"
           />
-          <span className="modal__input-error" id="placeName-error"/>
+          <span className="modal__input-error" id="placeName-error" />
           <input
             onChange={handleAddSrc}
             type="url"
@@ -50,8 +49,8 @@ const handleSubmit = (evt) => {
             placeholder="Ссылка на картинку"
             required
           />
-          <span className="modal__input-error" id="placeUrl-error"/>
-          <input type="submit" className="modal__sbmt-btn" value="Создать" name="save"/>
+          <span className="modal__input-error" id="placeUrl-error" />
+          <input type="submit" className="modal__sbmt-btn" value="Создать" name="save" />
         </>
       )}
     />

@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
 import Card from './Card';
 import Spinner from './Spinner';
-import { CurrentUserContext} from "../contexts/CurrentUserContext";
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 const Main = ({
-  onEditAvatar, onEditProfile, onAddPlace, onCardClick, cards, onCardLike, onCardDelete, onLoading
+  onEditAvatar, onEditProfile, onAddPlace, onCardClick, cards, onCardLike, onCardDelete, onLoading,
 }) => {
-
   const currentUser = useContext(CurrentUserContext);
 
   return (
@@ -29,11 +28,15 @@ const Main = ({
         <ul className="elements">
           {onLoading
             ? <Spinner />
-            : cards.map((card) => <Card key={card._id}
-                                        card={card}
-                                        onCardClick={onCardClick}
-                                        onCardLike={onCardLike}
-                                        onCardDelete={onCardDelete} />)}
+            : cards.map((card) => (
+              <Card
+                key={card._id}
+                card={card}
+                onCardClick={onCardClick}
+                onCardLike={onCardLike}
+                onCardDelete={onCardDelete}
+              />
+            ))}
         </ul>
       </section>
 
